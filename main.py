@@ -7,21 +7,35 @@ def isList(extractedValue):
         for item in extractedValue:
             returnDictionaryValues(item)
 
-def returnDictionaryValues(extractedValue):
-    try:
+def isDictionaryOrList(extractedValue):
+    if isinstance(extractedValue, dict):
         for key, value in extractedValue.items():
-            if isinstance(value, dict):
+            print(f"==={key}===")
+            isDictionaryOrList(value)
+    elif isinstance(extractedValue, list):
+        isList(extractedValue)
+    else:
+        returnDictionaryValues(extractedValue)
 
-                print(f"==={key}===")
+def returnDictionaryValues(extractedValue):
+    for key, value in extractedValue.items():
+        print(f"{key}: {value}")
 
-                returnDictionaryValues(value)
-            elif isinstance(value, list):
-                isList(value)
-            else:
+# def returnDictionaryValues(extractedValue):
+#     try:
+#         for key, value in extractedValue.items():
+#             if isinstance(value, dict):
 
-                print(f"{key}: {value}")
-    except AttributeError as e:
-        print(f"{extractedValue}")
+#                 print(f"==={key}===")
+
+#                 returnDictionaryValues(value)
+#             elif isinstance(value, list):
+#                 isList(value)
+#             else:
+
+#                 print(f"{key}: {value}")
+#     except AttributeError as e:
+#         print(f"{extractedValue}")
 
 
 # Retrieve the data from the source
@@ -33,7 +47,7 @@ try:
     response = requests.get(DonkiCMEUrl)
     response.raise_for_status()
     data = json.loads(response.text)
-    returnDictionaryValues(data)
+    isDictionaryOrList(data)
 
     # Return the key-value pair
     # if value is dictionary call myself again
