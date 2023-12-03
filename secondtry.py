@@ -26,11 +26,9 @@ def returnDictionaryValues(extractedValue):
 
 # Retrieve the data from the source
 NeowsUrl = 'https://api.nasa.gov/neo/rest/v1/feed?start_date=2015-09-07&end_date=2015-09-08&api_key=DEMO_KEY'
-DonkiCMEUrl = 'https://api.nasa.gov/DONKI/CME?startDate=yyyy-MM-dd&endDate=yyyy-MM-dd&api_key=DEMO_KEY'
-DonkiCMEAUrl = 'https://api.nasa.gov/DONKI/CME?startDate=yyyy-MM-dd&endDate=yyyy-MM-dd&api_key=DEMO_KEY'
 
 try:
-    response = requests.get(DonkiCMEUrl)
+    response = requests.get(NeowsUrl)
     response.raise_for_status()
     data = json.loads(response.text)
     returnDictionaryValues(data)
