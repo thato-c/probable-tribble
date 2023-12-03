@@ -9,12 +9,22 @@ connection = pymssql.connect(server='localhost',
 # Create a cursor from the connection
 cursor = connection.cursor()
 
+# Create Queries
+getUsers = "SELECT * FROM Users"
+createTable = ''' CREATE TABLE NEO (
+                Neo_Id INT PRIMARY KEY,
+                NeoRef_Id INT,
+                Name varchar(100),
+                AbsMagnitude int
+                )
+'''
 # Execute SQL
-cursor.execute("SELECT * FROM Users")
-rows = cursor.fetchall()
+cursor.execute(createTable)
+#rows = cursor.fetchall()
+connection.commit()
 
 # Do something with the retrieved data
-print(rows)
+#print(rows)
 
 # Close the cursor and conneciton
 cursor.close()
