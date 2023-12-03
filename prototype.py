@@ -4,7 +4,7 @@ import json
 import requests
 
 tableNames = set()
-columnNames = ''
+columnNames = set()
 rowValues =  ''
 
 def isList(extractedValue):
@@ -17,14 +17,16 @@ def returnDictionaryValues(extractedValue):
     try:
         for key, value in extractedValue.items():
             if isinstance(value, dict):
-                #print(f"==={key}===")
-                tableNames.add(key)
+                # Make the key a Table
+                print(f"==={key}===")
+                #tableNames.add(key)
                 returnDictionaryValues(value)
             elif isinstance(value, list):
                 isList(value)
             else:
-                #print(f"{key}: {value}")
-                columnNames += f"{key}\n"
+                # Make the key a column and the value a record
+                print(f"{key}: {value}")
+                #columnNames += f"{key}\n"
                 #rowValues += f"{value}"
 
     except AttributeError as e:
@@ -42,8 +44,6 @@ try:
     print("")
     print("======================================")
     print("")
-    print(tableNames)
-    print(columnNames)
 
 except requests.exceptions.RequestException as e:
     print(f"Error: {e}")
