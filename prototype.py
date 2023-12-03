@@ -3,23 +3,30 @@
 import json
 import requests
 
+tableNames = set()
+columnNames = ''
+rowValues =  ''
+
 def isList(extractedValue):
         for item in extractedValue:
             returnDictionaryValues(item)
 
 def returnDictionaryValues(extractedValue):
+    global tableNames, columnNames
+
     try:
         for key, value in extractedValue.items():
             if isinstance(value, dict):
-
-                print(f"==={key}===")
-
+                #print(f"==={key}===")
+                tableNames.add(key)
                 returnDictionaryValues(value)
             elif isinstance(value, list):
                 isList(value)
             else:
+                #print(f"{key}: {value}")
+                columnNames += f"{key}\n"
+                #rowValues += f"{value}"
 
-                print(f"{key}: {value}")
     except AttributeError as e:
         print(f"{extractedValue}")
 
@@ -31,7 +38,12 @@ try:
     response = requests.get(NeowsUrl)
     response.raise_for_status()
     data = json.loads(response.text)
-    returnDictionaryValues(data)  
+    returnDictionaryValues(data)
+    print("")
+    print("======================================")
+    print("")
+    print(tableNames)
+    print(columnNames)
 
 except requests.exceptions.RequestException as e:
     print(f"Error: {e}")
