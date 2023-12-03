@@ -31,13 +31,7 @@ try:
     response = requests.get(NeowsUrl)
     response.raise_for_status()
     data = json.loads(response.text)
-    returnDictionaryValues(data)
-
-    # Return the key-value pair
-    # if value is dictionary call myself again
-    # if value is list call list to go to next item
-    # else return key-value pair
-    
+    returnDictionaryValues(data)  
 
 except requests.exceptions.RequestException as e:
     print(f"Error: {e}")
